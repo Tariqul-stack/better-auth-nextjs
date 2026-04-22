@@ -11,31 +11,24 @@ import {
   TextField,
 } from "@heroui/react";
 
-const SignUp = () => {
+const SignInPage = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const userData = Object.fromEntries(formData.entries());
-    console.log("From submitted with:", userData);
+    console.log("Form submitted with:", userData);
 
-    const { data, error } = await authClient.signUp.email({
-      name: userData.name,
+    const { data, error } = await authClient.signIn.email({
       email: userData.email,
       password: userData.password,
+      rememberMe: true,
       callbackURL: "/",
     });
-
-    console.log("Sign up response:", { data, error });
-    if (error) {
-      alert("Error signing up: " + error.message);
-    }
-    if (data) {
-      alert("Sign up successful!!!");
-    }
+    console.log("Sign in response:", { data, error });
   };
   return (
     <div>
-      <h2>Please Sign Up</h2>
+      <h2>Please Sign In</h2>
       <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
         {/* Name */}
         <TextField
@@ -108,4 +101,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignInPage;
